@@ -1,4 +1,7 @@
 import streamlit as st
+from tabs.intro.eia_tab import IntroEIATab
+from tabs.intro.ipea_tab import IntroIPEATab
+from tabs.intro.petroleo_brent_tab import IntroPetroleoBrentTab
 from util.constantes import TITULO_INTRODUCAO, TITULO_PRINCIPAL
 from util.layout import output_layout
 
@@ -11,11 +14,14 @@ output_layout()
 with st.container():
     st.header(f":orange[{TITULO_INTRODUCAO}]")
 
-    tab0, tab1, tab2, tab3 = st.tabs(
+    tab0, tab1, tab2 = st.tabs(
         tabs=[
-            "Análise demográfica",
-            "Análise clínica",
-            "Machine Learning: Ensemble",
-            "Machine Learning: Não-supervisionado",
+            "Petróleo BRENT",
+            "IPEA",
+            "EIA",
         ]
     )
+
+    IntroPetroleoBrentTab(tab0)
+    IntroIPEATab(tab0)
+    IntroEIATab(tab0)
