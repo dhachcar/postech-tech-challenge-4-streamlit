@@ -10,5 +10,5 @@ class HistoriaEvento3Tab(TabInterface):
         with self.tab:
             st.subheader(':blue[Guerra do Iraque (2003-2011)]', divider='blue')
             st.markdown('''
-                Abaixo, a arquitetura deste projeto:
+                A Guerra do Iraque, também conhecida como Guerra do Golfo II, começou em março de 2003 quando uma coalizão liderada pelos Estados Unidos invadiu o país. O objetivo principal era remover Saddam Hussein do poder, alegando que ele possuía armas de destruição em massa e apoiava o terrorismo. Depois que o regime de Hussein foi derrubado, o conflito evoluiu para uma longa e complexa guerra de guerrilha, que resultou em muitas vidas perdidas e deixou um legado de instabilidade na região do Oriente Médio.
             ''')

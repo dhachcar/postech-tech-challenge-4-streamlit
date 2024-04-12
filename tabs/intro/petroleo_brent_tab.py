@@ -8,13 +8,8 @@ class IntroPetroleoBrentTab(TabInterface):
     
     def render(self):
         with self.tab:
-            st.subheader(':blue[Arquitetura]', divider='blue')
+            st.subheader(':blue[Petróleo Brent]', divider='blue')
             st.markdown('''
-                Este projeto utiliza cinco ferramentas principais durante o seu decorrer: **:blue[Apache Spark]**, **:blue[Google Colab]**, **:blue[Google Cloud Storage]**, **:blue[Google BigQuery]** e **:blue[Streamlit]**. 
-                * O **:blue[Google Colab]** fornece um ambiente flexível e colaborativo baseado em nuvem para manipulação de dados com Python, análise exploratória e execução de algoritmos de machine learning, incluindo o uso do **:blue[Apache Spark]** para processamento distribuído. 
-                * O **:blue[Google Cloud]** Storage é utilizado para armazenar os arquivos originais da PNAD COVID-19, garantindo segurança e escalabilidade no armazenamento dos dados. 
-                * O **:blue[Google BigQuery]** oferece uma solução de data warehouse totalmente gerenciada para armazenar e consultar grandes volumes de dados com rapidez e eficiência. 
-                * Por fim, o **:blue[Streamlit]** é utilizado para a criação de um dashboard interativo que apresenta os resultados do projeto, integrando-se de forma fluida com as demais ferramentas e proporcionando uma experiência de usuário intuitiva e amigável. 
-                        
-                Abaixo, a arquitetura deste projeto:
+                O petróleo Brent é uma referência internacional para o preço do petróleo bruto, utilizado como padrão para determinar os preços de compra e venda em todo o mundo. Originário do Mar do Norte, o petróleo Brent é um tipo de petróleo leve e doce, de alta qualidade, que é amplamente negociado nos mercados internacionais de commodities. Seu preço é influenciado por uma série de fatores, incluindo a oferta e demanda globais, eventos geopolíticos, políticas de produção da OPEP e condições econômicas mundiais.
+                A relevância do petróleo Brent como padrão internacional se deve à sua ampla disponibilidade e qualidade consistente, tornando-o uma referência confiável para transações comerciais e contratos futuros. Os preços do petróleo Brent são frequentemente citados como indicadores-chave da saúde e estabilidade da economia global, afetando uma variedade de setores, desde transporte e energia até alimentação e manufatura. Como resultado, flutuações significativas nos preços do petróleo Brent podem ter impactos substanciais em economias nacionais e na política internacional.
             ''')

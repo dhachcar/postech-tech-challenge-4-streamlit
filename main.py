@@ -15,15 +15,14 @@ output_layout()
 st.header(f":orange[{TITULO_PRINCIPAL}]")
 
 st.subheader(
-    ":blue[Explorando os Impactos da Pandemia de COVID-19 no Brasil através da Análise de Dados]",
+    ":blue[Análise histórica do petróleo Brent: analisando o seu passado e prevendo o seu futuro]",
     divider="blue",
 )
 st.markdown(
     """
-    A pandemia de COVID-19, declarada pela Organização Mundial da Saúde (OMS) em março de 2020, representou um dos desafios mais significativos enfrentados pela humanidade no século XXI. Além dos impactos diretos na saúde pública, a disseminação do vírus SARS-CoV-2 provocou profundas repercussões socioeconômicas em todo o mundo, incluindo no Brasil. Diante deste contexto, compreender os efeitos da pandemia e suas ramificações em diferentes aspectos da vida da população torna-se uma prioridade crucial para governos, instituições de pesquisa e demais atores sociais.\n\n
-    Este trabalho tem como objetivo explorar os impactos da pandemia de COVID-19 no Brasil através da análise de dados, utilizando informações coletadas pela Pesquisa Nacional por Amostra de Domicílios Contínua (PNAD) COVID-19, conduzida pelo Instituto Brasileiro de Geografia e Estatística (IBGE). A PNAD COVID-19 é uma ferramenta fundamental que fornece insights valiosos sobre como a crise sanitária afetou diversos aspectos da vida dos brasileiros, incluindo o mercado de trabalho, acesso a serviços de saúde, educação, entre outros.
-    Por meio da análise desses dados, buscamos identificar padrões, tendências e desafios enfrentados pela população brasileira durante a pandemia. Ao compreendermos melhor os impactos socioeconômicos da COVID-19, podemos contribuir para o desenvolvimento de estratégias e políticas mais eficazes para enfrentar os desafios atuais e promover a recuperação pós-pandemia.\n\n
-    Neste trabalho, vamos explorar os dados da PNAD COVID-19 para fornecer uma visão abrangente e fundamentada sobre os efeitos da pandemia no Brasil, contribuindo assim para uma compreensão mais completa dessa crise sem precedentes.
+    Este projeto tem como propósito analisar as flutuações históricas do preço do petróleo Brent e criar um modelo de machine learning para prever seus valores futuros. O petróleo Brent, como uma referência internacional essencial para os preços do petróleo, é amplamente utilizado em transações comerciais e contratos futuros em âmbito global. Compreender as tendências passadas e identificar padrões nos dados históricos do preço do petróleo Brent oferece insights valiosos para investidores, empresas e formuladores de políticas energéticas.\n\n
+    Ao explorar os dados históricos do preço do petróleo Brent, realizaremos análises estatísticas para compreender melhor os padrões e tendências ao longo do tempo. Este processo incluirá a identificação de fatores que influenciam significativamente o preço do petróleo, como oferta e demanda, geopolítica e condições econômicas globais. Além disso, utilizaremos técnicas de visualização de dados para destacar padrões e correlações relevantes, o que nos permitirá desenvolver insights mais aprofundados sobre o comportamento do mercado de petróleo.\n\n
+    Após a análise, é criado um modelo de machine learning voltado para séries temporais que será responsável por prever o preço futuro do barril de petróleo Brent.
 """
 )
 

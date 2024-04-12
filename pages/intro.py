@@ -17,11 +17,11 @@ with st.container():
     tab0, tab1, tab2 = st.tabs(
         tabs=[
             "Petróleo BRENT",
-            "IPEA",
-            "EIA",
+            "Instituto de Pesquisa Econômica Aplicada (IPEA)",
+            "Energy Information Administration (EIA)",
         ]
     )
 
     IntroPetroleoBrentTab(tab0)
-    IntroIPEATab(tab0)
-    IntroEIATab(tab0)
+    IntroIPEATab(tab1)
+    IntroEIATab(tab2)

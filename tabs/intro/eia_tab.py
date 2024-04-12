@@ -8,13 +8,9 @@ class IntroEIATab(TabInterface):
     
     def render(self):
         with self.tab:
-            st.subheader(':blue[Arquitetura]', divider='blue')
+            st.subheader(':blue[Energy Information Administration (EIA)]', divider='blue')
             st.markdown('''
-                Este projeto utiliza cinco ferramentas principais durante o seu decorrer: **:blue[Apache Spark]**, **:blue[Google Colab]**, **:blue[Google Cloud Storage]**, **:blue[Google BigQuery]** e **:blue[Streamlit]**. 
-                * O **:blue[Google Colab]** fornece um ambiente flexível e colaborativo baseado em nuvem para manipulação de dados com Python, análise exploratória e execução de algoritmos de machine learning, incluindo o uso do **:blue[Apache Spark]** para processamento distribuído. 
-                * O **:blue[Google Cloud]** Storage é utilizado para armazenar os arquivos originais da PNAD COVID-19, garantindo segurança e escalabilidade no armazenamento dos dados. 
-                * O **:blue[Google BigQuery]** oferece uma solução de data warehouse totalmente gerenciada para armazenar e consultar grandes volumes de dados com rapidez e eficiência. 
-                * Por fim, o **:blue[Streamlit]** é utilizado para a criação de um dashboard interativo que apresenta os resultados do projeto, integrando-se de forma fluida com as demais ferramentas e proporcionando uma experiência de usuário intuitiva e amigável. 
-                        
-                Abaixo, a arquitetura deste projeto:
+                A Energy Information Administration (EIA) é uma agência do governo dos Estados Unidos responsável por coletar, analisar e disseminar informações sobre energia, incluindo dados sobre produção, consumo, preços e reservas de petróleo, gás natural, carvão, energia elétrica e renovável.\n\n
+                Fundada em 1977, a EIA desempenha um papel crucial na elaboração de políticas energéticas, fornecendo informações precisas e imparciais para governos, empresas, pesquisadores e o público em geral. Suas projeções e relatórios são amplamente utilizados para orientar investimentos, avaliar tendências de mercado e planejar políticas públicas relacionadas à energia nos Estados Unidos e globalmente.\n\n
+                Para este projeto, foi criado uma conta de acesso à base da EIA e requisitado acesso à sua API. Com a liberação em mãos, foram consultados todos os dados históricos do EIA a respeito do preço do barril de petróleo Brent. A base em si consiste em dados desde maio/1987 até os dias atuais.
             ''')

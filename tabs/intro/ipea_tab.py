@@ -8,13 +8,9 @@ class IntroIPEATab(TabInterface):
     
     def render(self):
         with self.tab:
-            st.subheader(':blue[Arquitetura]', divider='blue')
+            st.subheader(':blue[Instituto de Pesquisa Econômica Aplicada (IPEA)]', divider='blue')
             st.markdown('''
-                Este projeto utiliza cinco ferramentas principais durante o seu decorrer: **:blue[Apache Spark]**, **:blue[Google Colab]**, **:blue[Google Cloud Storage]**, **:blue[Google BigQuery]** e **:blue[Streamlit]**. 
-                * O **:blue[Google Colab]** fornece um ambiente flexível e colaborativo baseado em nuvem para manipulação de dados com Python, análise exploratória e execução de algoritmos de machine learning, incluindo o uso do **:blue[Apache Spark]** para processamento distribuído. 
-                * O **:blue[Google Cloud]** Storage é utilizado para armazenar os arquivos originais da PNAD COVID-19, garantindo segurança e escalabilidade no armazenamento dos dados. 
-                * O **:blue[Google BigQuery]** oferece uma solução de data warehouse totalmente gerenciada para armazenar e consultar grandes volumes de dados com rapidez e eficiência. 
-                * Por fim, o **:blue[Streamlit]** é utilizado para a criação de um dashboard interativo que apresenta os resultados do projeto, integrando-se de forma fluida com as demais ferramentas e proporcionando uma experiência de usuário intuitiva e amigável. 
-                        
-                Abaixo, a arquitetura deste projeto:
+                O Instituto de Pesquisa Econômica Aplicada (IPEA) é uma instituição governamental brasileira vinculada ao Ministério da Economia, responsável por produzir pesquisas e estudos de alta qualidade em economia e políticas públicas. Fundado em 1964, o IPEA desempenha um papel fundamental na formulação e avaliação de políticas governamentais, fornecendo análises e recomendações baseadas em evidências para contribuir com o desenvolvimento socioeconômico do Brasil.\n\n
+                Sua produção de conhecimento abrange uma ampla gama de áreas, incluindo macroeconomia, mercado de trabalho, saúde, educação, meio ambiente e segurança pública, entre outras, e sua atuação é reconhecida nacional e internacionalmente como uma fonte confiável de informações e análises para tomadores de decisão, acadêmicos e sociedade em geral.\n\n
+                Neste projeto, inicialmente foram consultados os dados do IPEA, mas no fim, a base final foi obtida diretamente da mesma fonte que eles utilizam, o EIA.
             ''')

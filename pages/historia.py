@@ -25,7 +25,8 @@ with st.container():
 
     # TODO: colocar grafico com todos os pontos historicos
 
-    st.markdown('Para navegar entre as abas, segure a tecla **:blue[[SHIFT]]** e utilize botão de scroll do mouse :three_button_mouse:')
+    st.markdown('Ao longo das décadas, uma série de eventos significativos, como guerras e revoluções, moldaram o contexto geopolítico global de suas respectivas eras. Esses acontecimentos desempenharam um papel crucial na flutuação dos preços da commodity do petróleo, uma vez que é uma peça fundamental na economia mundial. A seguir, serão detalhados alguns desses eventos cruciais que influenciaram a variação de preço desse produto tão vital.')
+    st.markdown('<small>Para **:blue[navegar entre as abas]**, posicione o mouse em cima das abas e segure a tecla **:blue[[SHIFT]]** e utilize botão de scroll do mouse :three_button_mouse:</small>', unsafe_allow_html=True)
     tab0, tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11 = st.tabs(
         tabs=[
             "Guerra do Golfo (1990-1991)",

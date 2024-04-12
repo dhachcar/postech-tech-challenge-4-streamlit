@@ -24,4 +24,8 @@ with st.container():
         10. https://pt.wikipedia.org/wiki/Pandemia_de_COVID-19
         11. https://agenciabrasil.ebc.com.br/economia/noticia/2022-06/economia-segue-em-recuperacao-com-crescimento-robusto-diz-secretaria
         12. https://pt.wikipedia.org/wiki/Invas%C3%A3o_da_Ucr%C3%A2nia_pela_R%C3%BAssia_(2022%E2%80%93presente)
+        13. https://www.ipea.gov.br/portal/
+        14. https://www.eia.gov/
+        15. https://www.eia.gov/developer/
+        16. https://www.eia.gov/opendata/browser/petroleum/pri/spt
     ''')
