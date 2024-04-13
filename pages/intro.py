@@ -14,9 +14,15 @@ output_layout()
 with st.container():
     st.header(f":orange[{TITULO_INTRODUCAO}]")
 
+    st.markdown(
+        """
+        Nesta introdução, são descritos alguns tópicos importantes para o entendimento do projeto, dentre eles oque é o petróleo Brent, a EIA e o IPEA.
+    """
+    )
+
     tab0, tab1, tab2 = st.tabs(
         tabs=[
-            "Petróleo BRENT",
+            "Petróleo Brent",
             "Instituto de Pesquisa Econômica Aplicada (IPEA)",
             "Energy Information Administration (EIA)",
         ]
