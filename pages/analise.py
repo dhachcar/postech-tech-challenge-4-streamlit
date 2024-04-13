@@ -11,11 +11,4 @@ output_layout()
 with st.container():
     st.header(f":orange[{TITULO_ANALISE_EXPLORATORIA}]")
 
-    tab0, tab1, tab2, tab3 = st.tabs(
-        tabs=[
-            "Análise demográfica",
-            "Análise clínica",
-            "Machine Learning: Ensemble",
-            "Machine Learning: Não-supervisionado",
-        ]
-    )
+    
