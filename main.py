@@ -40,6 +40,6 @@ st.markdown(
     Com base na análise feita, são criados 2 modelos distintos que tem o intuito de prever o preço futuro do barril de petróleo.
     A respeito dos modelos criados:
     * O primeiro modelo utiliza a biblioteca Prophet da Meta
-    * O segundo modelo utiliza um algoritmo de rede neural
+    * O segundo modelo utiliza o algoritmo de rede neural LSTM (Long short-term memory)
 """
 )
