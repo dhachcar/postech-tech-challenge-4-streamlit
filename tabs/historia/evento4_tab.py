@@ -1,13 +1,15 @@
 import streamlit as st
-from tabs.tab import TabInterface
-import pandas as pd
-import plotly.graph_objs as go
+from tabs.historia.evento_tab import EventoTab
+from util.layout import format_number
 
 
-class HistoriaEvento4Tab(TabInterface):
+class HistoriaEvento4Tab(EventoTab):
     def __init__(self, tab):
+        super().__init__(
+            query_periodo_analisado='ds >= "2007-01-01" and ds <= "2009-08-01"',
+            query_periodo_interesse='ds >= "2008-05-01" and ds <= "2009-02-01"',
+        )
         self.tab = tab
-        self.df = pd.read_csv("assets/csv/timeseries-petroleo-brent.csv")
         self.render()
 
     def render(self):
@@ -26,22 +28,10 @@ class HistoriaEvento4Tab(TabInterface):
                 divider="blue",
             )
 
-            periodo_analisado = self.df.query(
-                'ds >= "2007-01-01" and ds <= "2009-08-01"'
+            st.markdown(
+                """
+                No gráfico a seguir...
+            """
             )
 
-            fig = go.Figure()
-            fig.add_trace(
-                go.Scatter(
-                    x=periodo_analisado.ds,
-                    y=periodo_analisado.y,
-                    mode="lines",
-                    name="Preço do barril de petróleo",
-                )
-            )
-
-            with st.container():
-                _, col1, _ = st.columns([1, 8, 1])
-
-                with col1:
-                    st.plotly_chart(fig, use_container_width=True)
+            self.plot_graficos()

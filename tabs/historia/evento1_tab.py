@@ -1,13 +1,15 @@
 import streamlit as st
-from tabs.tab import TabInterface
-import pandas as pd
-import plotly.graph_objs as go
+from tabs.historia.evento_tab import EventoTab
+from util.layout import format_number
 
 
-class HistoriaEvento1Tab(TabInterface):
+class HistoriaEvento1Tab(EventoTab):
     def __init__(self, tab):
+        super().__init__(
+            query_periodo_analisado='ds >= "1990-01-01" and ds <= "1991-05-01"',
+            query_periodo_interesse='ds >= "1990-07-22" and ds <= "1991-01-31"',
+        )
         self.tab = tab
-        self.df = pd.read_csv("assets/csv/timeseries-petroleo-brent.csv")
         self.render()
 
     def render(self):
@@ -24,22 +26,11 @@ class HistoriaEvento1Tab(TabInterface):
                 divider="blue",
             )
 
-            periodo_analisado = self.df.query(
-                'ds >= "1990-01-01" and ds <= "1991-05-01"'
+            st.markdown(
+                f"""
+                No gráfico a seguir, analisamos exclusivamente as datas mais próximas e relevantes ao evento estudado e tomando como exemplo o período de :blue[07/02/1990] até :blue[31/01/1991], pode-se observar que no seu auge, o preço do petróleo mais que dobrou, em cerca de :blue[{format_number(self.variacao, '%.2f')}%], indo de :blue[US$ {format_number(self.min, '%.2f')}] para cerca de :blue[US$ {format_number(self.max, '%.2f')}].\n
+                A partir de fevereiro de 1991, o preço voltou a patamares semelhantes à antes do início da Guerra do Golfo.
+            """
             )
 
-            fig = go.Figure()
-            fig.add_trace(
-                go.Scatter(
-                    x=periodo_analisado.ds,
-                    y=periodo_analisado.y,
-                    mode="lines",
-                    name="Preço do barril de petróleo",
-                )
-            )
-
-            with st.container():
-                _, col1, _ = st.columns([1, 8, 1])
-
-                with col1:
-                    st.plotly_chart(fig, use_container_width=True)
+            self.plot_graficos()

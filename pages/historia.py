@@ -137,7 +137,22 @@ with st.container():
 
     st.header(f":orange[{TITULO_HISTORIA}]")
     st.markdown(
-        "Ao longo das décadas, uma série de eventos significativos, como guerras e revoluções, moldaram o contexto geopolítico global de suas respectivas eras. Esses acontecimentos desempenharam um papel crucial na flutuação dos preços da commodity do petróleo, uma vez que é uma peça fundamental na economia mundial. A seguir, serão detalhados alguns desses eventos cruciais que influenciaram a variação de preço desse produto tão vital."
+        """
+        Ao longo das décadas, uma série de eventos significativos, como guerras e revoluções, moldaram o contexto geopolítico global de suas respectivas eras. Esses acontecimentos desempenharam um papel crucial na flutuação dos preços da commodity do petróleo, uma vez que é uma peça fundamental na economia mundial.\n
+        A seguir, serão detalhados 12 desses eventos cruciais, ordenados de forma cronológica, conforme a seguir:
+        * Guerra do Golfo (1990-1991)
+        * Atentados terroristas nos EUA (2001)
+        * Guerra do Iraque (2003-2011)
+        * Crise financeira global (2007-2008)
+        * Primavera Árabe (2010-2012)
+        * Guerra Civil na Líbia (2011)
+        * Conflito na Síria (2011~)
+        * OPEP mantém ritmo de produção (2014)
+        * Grande produção e baixa demanda (2015)
+        * Pandemia de COVID-19 (2020-2023)
+        * Recuperação econômica pós-COVID (2021~)
+        * Conflito Rússia-Ucrânia (2022~)
+    """
     )
 
     plot_grafico_evolucao_preco_petroleo()
