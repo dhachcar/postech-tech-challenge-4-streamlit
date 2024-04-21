@@ -7,7 +7,7 @@ class HistoriaEvento8Tab(EventoTab):
     def __init__(self, tab):
         super().__init__(
             query_periodo_analisado='ds >= "2014-01-01" and ds <= "2016-06-01"',
-            query_periodo_interesse='ds >= "2014-07-01" and ds <= "2015-05-01"',
+            query_periodo_interesse='ds >= "2014-06-01" and ds <= "2015-05-01"',
         )
         self.tab = tab
         self.render()
@@ -29,8 +29,8 @@ class HistoriaEvento8Tab(EventoTab):
             )
 
             st.markdown(
-                """
-                No gráfico a seguir...
+                f"""
+                O próximo período de interesse analisado se encontra entre Julho/2014 e Abril/2015.  Foi uma época na qual a produção de petróleo estava em alta mas a demanda em queda. Como todos sabemos, o mercado é regido pela lei da oferta e demanda e portanto, quando há muito de um produto disponível no mercado mas pouca demanda por ele, seu preço sofrerá uma desvalorização acentuada. É exatamente este movimento que podemos observar no período em questão. Após atingir uma máxima de :blue[US$ {format_number(self.max, '%.2f')}], o preço do barril chegou a cair para a mínima de :blue[US$ {format_number(self.min, '%.2f')}] no período, o que representa uma variação de :red[{format_number(self.variacao_negativa, '%.2f')}%] no preço. Observando os períodos posteriores ao analisado, ainda é possível visualizar novas oscilações negativas, atingindo valores ainda mais baixos.
             """
             )
 

@@ -30,8 +30,8 @@ class HistoriaEvento11Tab(EventoTab):
             )
 
             st.markdown(
-                """
-                No gráfico a seguir...
+                f"""
+                Com a vacinação em massa e a diminuição de casos e mortes de COVID-19 na metade do ano, o mundo começou a se recuperar dos efeitos da pandemia de forma tímida. Apesar de tudo, naquele momento a pandemia ainda estava em curso, mas o choque inicial e as ondas mais severas já haviam passado. Essa recuperação tímida pode ser observada no gráfico abaixo, onde o menor valor atingido foi de :blue[US$ {format_number(self.min, '%.2f')}] e o maior valor foi de :blue[US$ {format_number(self.max, '%.2f')}], uma variação positiva de :green[{format_number(self.variacao_positiva, '%.2f')}%]. Vale notar que ainda hoje, em pleno 2024, a recuperação econômica continua em andamento e ainda sentimos os efeitos da pandemia. Muito provavelmente, eles ainda serão sentidos pelos próximos anos.
             """
             )
 

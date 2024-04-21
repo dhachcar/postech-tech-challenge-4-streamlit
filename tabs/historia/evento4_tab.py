@@ -29,8 +29,8 @@ class HistoriaEvento4Tab(EventoTab):
             )
 
             st.markdown(
-                """
-                No gráfico a seguir...
+                f"""
+                Ainda sob os efeitos da guerra do Iraque, no ano de 2007 e em meados de Agosto/Setembro do mesmo ano, podemos observar o ínicio de uma subida vertiginosa do preço do barril de petróleo, atingindo seu ápice em Julho de 2008. Alguns meses depois, em Setembro de 2008 o banco Lehman Brothers quebra, arrastando todo o mercado americano e por tabela o resto do mundo para uma nova crise financeira mundial. O período de interesse analisado (linha em vermelho) mostra uma variação incrível de :red[{format_number(self.variacao_negativa, '%.2f')}%], ou seja, o preço caiu de sua máxima de :blue[US$ {format_number(self.max, '%.2f')}] para a mínima de :blue[US$ {format_number(self.min, '%.2f')}].
             """
             )
 

@@ -28,7 +28,7 @@ class HistoriaEvento1Tab(EventoTab):
 
             st.markdown(
                 f"""
-                No gráfico a seguir, analisamos exclusivamente as datas mais próximas e relevantes ao evento estudado e tomando como exemplo o período de :blue[07/02/1990] até :blue[31/01/1991], pode-se observar que no seu auge, o preço do petróleo mais que dobrou, em cerca de :blue[{format_number(self.variacao, '%.2f')}%], indo de :blue[US$ {format_number(self.min, '%.2f')}] para cerca de :blue[US$ {format_number(self.max, '%.2f')}].\n
+                No gráfico a seguir, analisamos exclusivamente as datas mais próximas e relevantes ao evento estudado e tomando como exemplo o período de :blue[07/02/1990] até :blue[31/01/1991], pode-se observar que no seu auge, o preço do petróleo mais que dobrou, em cerca de :green[{format_number(self.variacao_positiva, '%.2f')}%], indo de :blue[US$ {format_number(self.min, '%.2f')}] para cerca de :blue[US$ {format_number(self.max, '%.2f')}].\n
                 A partir de fevereiro de 1991, o preço voltou a patamares semelhantes à antes do início da Guerra do Golfo.
             """
             )

@@ -29,4 +29,5 @@ with st.container():
         15. https://www.eia.gov/developer/
         16. https://www.eia.gov/opendata/browser/petroleum/pri/spt
         17. https://facebook.github.io/prophet/docs/quick_start.html
+        18. https://plotly.com/python
     ''')

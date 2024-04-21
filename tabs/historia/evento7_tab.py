@@ -27,8 +27,8 @@ class HistoriaEvento7Tab(EventoTab):
             )
 
             st.markdown(
-                """
-                No gráfico a seguir...
+                f"""
+                O período de interesse (linha vermelha) analisado à seguir contempla não so a Primavera Árabe, mas eventos que se originaram também a partir dela, como a Guerra Civil da Líbia e o Conflito na Síria. Todos estes eventos em conjunto contribuem para a oscilação positiva do preço do barril de petróleo no período. De Setembro/2010 até Junho/2011 o preço variou de forma positiva em cerca de :green[{format_number(self.variacao_positiva, '%.2f')}%], tendo sua mínima em :blue[US$ {format_number(self.min, '%.2f')}] e saltando para a máxima de :blue[US$ {format_number(self.max, '%.2f')}].
             """
             )
 

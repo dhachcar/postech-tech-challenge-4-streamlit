@@ -7,7 +7,7 @@ class HistoriaEvento12Tab(EventoTab):
     def __init__(self, tab):
         super().__init__(
             query_periodo_analisado='ds >= "2022-01-01" and ds <= "2023-01-01"',
-            query_periodo_interesse='ds >= "2022-02-01" and ds <= "2022-04-01"',
+            query_periodo_interesse='ds >= "2022-02-01" and ds <= "2022-07-01"',
         )
         self.tab = tab
         self.render()
@@ -29,8 +29,8 @@ class HistoriaEvento12Tab(EventoTab):
             )
 
             st.markdown(
-                """
-                No gráfico a seguir...
+                f"""
+                Logo no início da guerra entre os dois países, podemos observar um salto no preço do barril de petróleo, já que a Rússia é uma grande produtora e fornecedora (inclusive de gás natural). Os efeitos se mantiveram até meados de Julho/2022, quando o preço começou a estabilziar em patamares mais baixos. O valor máximo atingido durante o período de interesse foi de :blue[US$ {format_number(self.max, '%.2f')}] e o valor mínimo foi de :blue[US$ {format_number(self.min, '%.2f')}], com uma variação de :green[{format_number(self.variacao_positiva, '%.2f')}%].
             """
             )
 

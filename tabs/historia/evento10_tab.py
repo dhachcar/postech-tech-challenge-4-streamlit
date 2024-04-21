@@ -29,8 +29,8 @@ class HistoriaEvento10Tab(EventoTab):
             )
 
             st.markdown(
-                """
-                No gráfico a seguir...
+                f"""
+                Logo no início da pandemia, em meados de Fevereiro/2020 e até Maio/2020, podemos observar uma queda vertiginosa no preço do barril de petróleo. Tal queda foi influenciada pelo lockdown imposto pelos governos de todo o mundo, com o objetivo de combater a pandemia em curso. Para exemplificar o impacto no preço, considerando o período de interesse, o preço máximo atingido (ocorrido em Fevereiro) foi de :blue[US$ {format_number(self.max, '%.2f')}]. Já o preço minímo foi de :blue[US$ {format_number(self.min, '%.2f')}] (atingido em Abril). Isso representa uma variação de cerca de :red[{format_number(self.variacao_negativa, '%.2f')}%].
             """
             )
 

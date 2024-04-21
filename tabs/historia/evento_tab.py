@@ -9,14 +9,15 @@ class EventoTab(TabInterface):
         self.df = pd.read_csv("assets/csv/timeseries-petroleo-brent.csv")
         self.periodo_analisado = self.df.query(query_periodo_analisado)
         self.periodo_interesse = self.df.query(query_periodo_interesse)
-        self.min, self.max, self.variacao = self.calcular_variacao()
+        self.min, self.max, self.variacao_positiva, self.variacao_negativa = self.calcular_variacao()
 
     def calcular_variacao(self):
         min = self.periodo_interesse["y"].min()
         max = self.periodo_interesse["y"].max()
-        variacao = ((max * 100) / min) - 100
+        variacao_positiva = ((max * 100) / min) - 100
+        variacao_negativa = ((min * 100) / max) - 100
 
-        return min, max, variacao
+        return min, max, variacao_positiva, variacao_negativa
 
     def plot_graficos(self):
         fig = go.Figure(
@@ -40,7 +41,7 @@ class EventoTab(TabInterface):
                 x=self.periodo_interesse.ds,
                 y=self.periodo_interesse.y,
                 mode="lines",
-                name="Período influenciado pelo evento",
+                name="Período de interesse influenciado pelo evento",
                 line=dict(color="red", width=2),
             )
         )

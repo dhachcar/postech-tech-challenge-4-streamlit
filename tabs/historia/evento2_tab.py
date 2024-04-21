@@ -7,7 +7,7 @@ class HistoriaEvento2Tab(EventoTab):
     def __init__(self, tab):
         super().__init__(
             query_periodo_analisado='ds >= "2001-06-01" and ds <= "2002-01-01"',
-            query_periodo_interesse='ds >= "2001-09-01" and ds <= "2001-10-01"',
+            query_periodo_interesse='ds >= "2001-09-01" and ds <= "2001-11-20"',
         )
         self.tab = tab
         self.render()
@@ -29,8 +29,8 @@ class HistoriaEvento2Tab(EventoTab):
             )
 
             st.markdown(
-                """
-                No gráfico a seguir...
+                f"""
+                Analisando o gráfico na época, é possível observar uma queda abrupta no preço do barril de petróleo logo após os eventos. De forma geral, no período de interesse analisado, houve uma variação de cerca de :red[{format_number(self.variacao_negativa, '%.2f')}%], caindo de :blue[US$ {format_number(self.max, '%.2f')}] para :blue[US$ {format_number(self.min, '%.2f')}] no seu menor nível no péríodo. Vale ressaltar que nos meses seguintes, o preço continuou com tendência de baixa, oscilando para valores ainda mais baixos.
             """
             )
 
