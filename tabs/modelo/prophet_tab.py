@@ -7,7 +7,6 @@ import pandas as pd
 import plotly.graph_objs as go
 from prophet.plot import plot_plotly
 from prophet.serialize import model_from_json
-
 from util.constantes import DATA_INICIAL
 from util.layout import format_number
 
@@ -126,50 +125,80 @@ class ModeloProphetTab(TabInterface):
 
         st.plotly_chart(fig)
 
+    def output_metricas_erro(self, metricas, primeiros_x_dias):
+        st.subheader(f":blue[Métricas de erro para os primeiros :orange[{primeiros_x_dias}] dias]", divider="blue")
+
+        with st.container():
+            (
+                col0,
+                col1,
+            ) = st.columns([1, 1])
+
+            with col0:
+                st.metric(
+                    label="MSE",
+                    value=format_number(metricas["mse"], "%0.4f"),
+                )
+
+            with col1:
+                st.metric(
+                    label="RMSE",
+                    value=format_number(metricas["rmse"], "%0.4f"),
+                )
+
+        with st.container():
+            (
+                col0,
+                col1,
+            ) = st.columns([1, 1])
+
+            with col0:
+                st.metric(
+                    label="MAE",
+                    value=format_number(metricas["mae"], "%0.4f"),
+                )
+
+            with col1:
+                st.metric(
+                    label="MAPE",
+                    value=format_number(metricas["mape"] * 100, "%0.4f") + "%",
+                )
+
     def render(self):
+        metrica_primeiros_x_dias = self.df_performance.iloc[0]
+        metrica_primeiros_15_dias = self.df_performance.iloc[14]
+        metrica_primeiros_30_dias = self.df_performance.iloc[29]
+
         with self.tab:
-            st.write("teste1")
-
             st.markdown("Dados base em 08/04/2024")
-            st.dataframe(self.df_performance)
 
-            metrica_primeiros_x_dias = self.df_performance.iloc[0]
+            with st.container():
+                col0, col1 = st.columns([6, 4])
+
+                with col0:
+                    st.dataframe(self.df_performance, hide_index=True, height=720)
+
+                with col1:
+                    self.output_metricas_erro(
+                        metrica_primeiros_x_dias,
+                        primeiros_x_dias=metrica_primeiros_x_dias['dias_no_futuro'],
+                    )
+
+                    self.output_metricas_erro(
+                        metrica_primeiros_15_dias,
+                        primeiros_x_dias=metrica_primeiros_15_dias['dias_no_futuro'],
+                    )
+
+                    self.output_metricas_erro(
+                        metrica_primeiros_30_dias,
+                        primeiros_x_dias=metrica_primeiros_30_dias['dias_no_futuro'],
+                    )
 
             st.markdown(
                 f"""
                 Principais métricas de erro calculadas para os primeiros :blue[{metrica_primeiros_x_dias['dias_no_futuro']}] dias
             """
             )
-
-            with st.container():
-                col0, col1, col2, col3 = st.columns([1, 1, 1, 1])
-
-                with col0:
-                    st.metric(
-                        label="MSE",
-                        value=format_number(metrica_primeiros_x_dias["mse"], "%0.4f"),
-                    )
-
-                with col1:
-                    st.metric(
-                        label="RMSE",
-                        value=format_number(metrica_primeiros_x_dias["rmse"], "%0.4f"),
-                    )
-
-                with col2:
-                    st.metric(
-                        label="MAE",
-                        value=format_number(metrica_primeiros_x_dias["mae"], "%0.4f"),
-                    )
-
-                with col3:
-                    st.metric(
-                        label="MAPE",
-                        value=format_number(
-                            metrica_primeiros_x_dias["mape"] * 100, "%0.4f"
-                        )
-                        + "%",
-                    )
 
             self.plot_grafico_performance()
 
@@ -189,8 +218,6 @@ class ModeloProphetTab(TabInterface):
                     date_difference = min - (end_date)
                     days_between = np.abs(date_difference.days)
 
-                    st.write(days_between)
-
                     df_futuro = self.modelo.make_future_dataframe(
                         periods=days_between, freq="D"
                     )
@@ -198,7 +225,9 @@ class ModeloProphetTab(TabInterface):
                     self.plot_grafico_previsao()
 
                     # pega x previsões, filtrando pela data para mostrar ao usuário os próximos valores previstos
-                    df_previsoes_iniciais = self.df_previsao.query("ds >= @min and ds <= @end_date")
+                    df_previsoes_iniciais = self.df_previsao.query(
+                        "ds >= @min and ds <= @end_date"
+                    )
                     st.dataframe(df_previsoes_iniciais[["ds", "yhat"]].iloc[0:10])
 
                     st.success("Processamento concluído!")
