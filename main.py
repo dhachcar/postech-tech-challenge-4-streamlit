@@ -1,5 +1,3 @@
-import plotly.graph_objs as go
-import pandas as pd
 import streamlit as st
 from util.constantes import TITULO_PRINCIPAL
 from util.layout import output_layout

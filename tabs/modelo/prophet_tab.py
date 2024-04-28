@@ -175,6 +175,35 @@ class ModeloProphetTab(TabInterface):
                     value=format_number(metricas["mape"] * 100, "%0.4f") + "%",
                 )
 
+    def predict(self, min, end_date):
+        date_difference = min - end_date
+        days_between = np.abs(date_difference.days)
+
+        df_futuro = self.modelo.make_future_dataframe(periods=days_between, freq="D")
+        self.df_previsao = self.modelo.predict(df_futuro)
+
+        # pega x previsões, filtrando pela data para mostrar ao usuário os próximos valores previstos
+        df_previsoes_iniciais = self.df_previsao.query("ds >= @min and ds <= @end_date")
+
+        with st.container():
+            clone = df_previsoes_iniciais.copy()
+            clone["ds"] = clone["ds"].apply(
+                lambda x: pd.to_datetime(x).strftime("%d/%m/%Y")
+            )
+            clone.rename(columns={"ds": "Data", "yhat": "Preço"}, inplace=True)
+
+            _, col, _ = st.columns([3, 4, 3])
+
+            with col:
+                st.dataframe(
+                    clone[["Data", "Preço"]],
+                    use_container_width=True,
+                    hide_index=True,
+                )
+
+        with st.container():
+            self.plot_grafico_previsao(total_dias_previsao=days_between)
+
     def render(self):
         metrica_primeiros_x_dias = self.df_performance.iloc[0]
         metrica_primeiros_15_dias = self.df_performance.iloc[14]
@@ -273,38 +302,6 @@ class ModeloProphetTab(TabInterface):
                             f"**:orange[IMPORTANTE:] a previsão é feita com a data base em :blue[{DATA_INICIAL.strftime('%d/%m/%Y')}] (último preço do barril de petróleo coletado).**"
                         )
 
-                        date_difference = min - end_date
-                        days_between = np.abs(date_difference.days)
+                        self.predict(min, end_date)
 
-                        df_futuro = self.modelo.make_future_dataframe(
-                            periods=days_between, freq="D"
-                        )
-                        self.df_previsao = self.modelo.predict(df_futuro)
-
-                        # pega x previsões, filtrando pela data para mostrar ao usuário os próximos valores previstos
-                        df_previsoes_iniciais = self.df_previsao.query(
-                            "ds >= @min and ds <= @end_date"
-                        )
-
-                        with st.container():
-                            clone = df_previsoes_iniciais.copy()
-                            clone["ds"] = clone["ds"].apply(
-                                lambda x: pd.to_datetime(x).strftime("%d/%m/%Y")
-                            )
-                            clone.rename(
-                                columns={"ds": "Data", "yhat": "Preço"}, inplace=True
-                            )
-
-                            _, col, _ = st.columns([3, 4, 3])
-
-                            with col:
-                                st.dataframe(
-                                    clone[["Data", "Preço"]],
-                                    use_container_width=True,
-                                    hide_index=True,
-                                )
-
-                        with st.container():
-                            self.plot_grafico_previsao(total_dias_previsao=days_between)
-
-                        st.success("Processamento concluído!")
+                        st.success("Processamento concluído! :white_check_mark:")
