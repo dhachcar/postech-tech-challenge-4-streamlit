@@ -66,17 +66,16 @@ class ModeloProphetTab(TabInterface):
             )
         )
 
-        st.markdown(
-            """
-            TODO: rever este texto... O gráfico teve seu eixo Y escalonado com log10, para permitir uma visualização mais apurada do aumento dos indicadores de erro no decorrer do tempo, quanto maior o intervalo.
-        """
-        )
-        st.plotly_chart(fig)
+        with st.container():
+            _, col, _ = st.columns([2, 6, 2])
 
-    def plot_grafico_previsao(self):
+            with col:
+                st.plotly_chart(fig, use_container_width=True)
+
+    def plot_grafico_previsao(self, total_dias_previsao):
         # gráfico do plotly
         fig = plot_plotly(
-            self.modelo, self.df_previsao, trend=True, figsize=(1200, 900)
+            self.modelo, self.df_previsao, trend=True, figsize=(1200, 900), xlabel='Data', ylabel='Preço do barril de petróleo (US$)'
         )
 
         # objetos de linha
@@ -84,7 +83,7 @@ class ModeloProphetTab(TabInterface):
             x=[2020, self.df_previsao.iloc[-1, :].ds],
             y=[0, 0],
             mode="lines",
-            line=dict(color="blue"),
+            line=dict(color="#49d7ff"),
             name="US$ 0,00",
         )
         linha_amarela = go.Scatter(
@@ -104,8 +103,12 @@ class ModeloProphetTab(TabInterface):
 
         # dados gerais do gráfico
         fig.update_layout(
-            title="Distribuição do valor (US$) do barril de petróleo Brent entre 2020 e os dias atuais + previsão dos próximos 30 dias",
+            title=f"Distribuição do valor (US$) do barril de petróleo Brent entre 2020 e os dias atuais + previsão dos próximos {total_dias_previsao} dia(s)",
             showlegend=True,
+            margin=dict(t=150),
+            legend=dict(
+                orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1
+            ),
         )
         fig.update_traces(marker=dict(color="darkorange"))
 
@@ -123,10 +126,13 @@ class ModeloProphetTab(TabInterface):
         fig.add_trace(linha_amarela)
         fig.add_trace(linha_vermelha)
 
-        st.plotly_chart(fig)
+        st.plotly_chart(fig, use_container_width=True)
 
     def output_metricas_erro(self, metricas, primeiros_x_dias):
-        st.subheader(f":blue[Métricas de erro para os primeiros :orange[{primeiros_x_dias}] dias]", divider="blue")
+        st.subheader(
+            f":blue[Métricas de erro para os primeiros :orange[{primeiros_x_dias}] dias]",
+            divider="blue",
+        )
 
         with st.container():
             (
@@ -170,64 +176,124 @@ class ModeloProphetTab(TabInterface):
         metrica_primeiros_30_dias = self.df_performance.iloc[29]
 
         with self.tab:
-            st.markdown("Dados base em 08/04/2024")
+            st.subheader(":blue[Sobre do modelo]", divider="blue")
+
+            st.markdown(
+                """
+                Este modelo foi criado com base nos dados históricos do preço do barril de petróleo Brent a partir de 01/01/2020, de forma a diminuir a janela de treino e consequentemente aumentar a precisão de previsão.
+            """
+            )
+
+            st.subheader(":blue[Performance do modelo]", divider="blue")
+
+            st.markdown(
+                f"""
+                Nesta seção, apresentamos os indicadores de erro do modelo :blue[Prophet] criado. Todas elas são geradas de forma automática pela biblioteca e dentre as consideradas, estão:
+                * :orange[MSE (Mean Squared Error)]: calculado como a média dos quadrados das diferenças entre os valores previstos pelo modelo e os valores reais observados nos dados de teste ou validação. Quanto menor o valor, mais preciso é o modelo em suas previsões.
+                * :orange[RMSE (Root Mean Squared Error)]: calculado como a raiz quadrada do MSE, o que significa que fornece uma medida do erro médio entre os valores previstos pelo modelo e os valores reais observados nos dados de teste ou validação, na mesma unidade que os dados originais. Assim como o MSE, quanto menor o valor do RMSE, melhor o desempenho do modelo em fazer previsões precisas.
+                * :orange[MAE (Mean Absolute Error)]: calculado como a média das diferenças absolutas entre os valores previstos pelo modelo e os valores reais observados nos dados de teste ou validação. Ao contrário do MSE e do RMSE, o MAE não leva em conta o quadrado das diferenças, o que o torna menos sensível a outliers e mais intuitivo em termos de interpretação, pois representa diretamente a magnitude média dos erros. Quanto menor o valor, melhor.
+                * :orange[MAPE (Mean Absolute Percentage Error)]: calculado como a média das diferenças percentuais absolutas entre os valores previstos pelo modelo e os valores reais observados nos dados de teste ou validação. Como os outros, quanto menor, melhor.
+                * :orange[MDAPE (Median Absolute Percentage Error)]: calculado como a mediana das diferenças percentuais absolutas entre os valores previstos pelo modelo e os valores reais observados nos dados de teste ou validação. Quanto menor, melhor.
+                * :orange[SMAPE (Symmetric Mean Absolute Percentage Error)]: calculado como a média das diferenças percentuais absolutas entre os valores previstos pelo modelo e os valores reais observados nos dados de teste ou validação, levando em consideração o valor absoluto da soma dos valores previstos e reais. Valores menores, indicam previsões mais precisas.
+                        
+                Vale notar que o modelo teve suas validações efetuadas com base na data de :blue[{DATA_INICIAL.strftime("%d/%m/%Y")}], portanto a performance auferida pela biblioteca começa a ser considerada a partir de 9 dias no futuro, mais especificamente em :blue[{(DATA_INICIAL + timedelta(days=9)).strftime("%d/%m/%Y")}].
+            """
+            )
 
             with st.container():
                 col0, col1 = st.columns([6, 4])
 
                 with col0:
-                    st.dataframe(self.df_performance, hide_index=True, height=720)
+                    clone = self.df_performance.copy()
+                    clone['data_no_futuro'] = clone['data_no_futuro'].apply(lambda x: pd.to_datetime(x).strftime('%d/%m/%Y'))
+
+                    st.dataframe(clone, hide_index=True, height=720)
 
                 with col1:
                     self.output_metricas_erro(
                         metrica_primeiros_x_dias,
-                        primeiros_x_dias=metrica_primeiros_x_dias['dias_no_futuro'],
+                        primeiros_x_dias=metrica_primeiros_x_dias["dias_no_futuro"],
                     )
 
                     self.output_metricas_erro(
                         metrica_primeiros_15_dias,
-                        primeiros_x_dias=metrica_primeiros_15_dias['dias_no_futuro'],
+                        primeiros_x_dias=metrica_primeiros_15_dias["dias_no_futuro"],
                     )
 
                     self.output_metricas_erro(
                         metrica_primeiros_30_dias,
-                        primeiros_x_dias=metrica_primeiros_30_dias['dias_no_futuro'],
+                        primeiros_x_dias=metrica_primeiros_30_dias["dias_no_futuro"],
                     )
 
             st.markdown(
                 f"""
-                Principais métricas de erro calculadas para os primeiros :blue[{metrica_primeiros_x_dias['dias_no_futuro']}] dias
+                Como podemos observar, quanto maior a janela de tempo no futuro, maiores são as métricas de erro, dado o período de treinamento considerado pelo modelo.\n\n
+                Tal relação de tempo X erro pode ser melhor visualizada no gráfico a seguir. Vale notar que os valores foram transformados em seus logaritmos para eliminar discrepâncias entre as diferentes métricas calculadas.
             """
             )
 
             self.plot_grafico_performance()
 
-            min = DATA_INICIAL
-            max_date = DATA_INICIAL + timedelta(days=90)
-            end_date = st.date_input(
-                "Data máxima de previsão",
-                min_value=min,
-                max_value=max_date,
-                value=max_date,
+            st.subheader(":blue[Executando o modelo]", divider="blue")
+
+            st.markdown(
+                f"""
+                Nesta seção, é possível escolher uma data no futuro e o modelo irá prever o preço do barril de petróleo até a data escolhida. Como os indicadores de erro tendem a subir de forma exponencial, quanto maior o tempo no futuro, limitamos o horizonte máximo em 90 dias a partir da data base :blue[{DATA_INICIAL.strftime("%d/%m/%Y")}].
+            """
             )
 
-            if st.button(":crystal_ball: Prever"):
-                with st.spinner("Processando..."):
-                    time.sleep(3)
+            with st.container():
+                col, _ = st.columns([2, 6])
 
-                    date_difference = min - (end_date)
-                    days_between = np.abs(date_difference.days)
-
-                    df_futuro = self.modelo.make_future_dataframe(
-                        periods=days_between, freq="D"
+                with col:
+                    min = DATA_INICIAL
+                    max_date = DATA_INICIAL + timedelta(days=90)
+                    end_date = st.date_input(
+                        "Data máxima de previsão",
+                        min_value=min,
+                        max_value=max_date,
+                        value=max_date,
                     )
-                    self.df_previsao = self.modelo.predict(df_futuro)
-                    self.plot_grafico_previsao()
 
-                    # pega x previsões, filtrando pela data para mostrar ao usuário os próximos valores previstos
-                    df_previsoes_iniciais = self.df_previsao.query(
-                        "ds >= @min and ds <= @end_date"
-                    )
-                    st.dataframe(df_previsoes_iniciais[["ds", "yhat"]].iloc[0:10])
+                if st.button(":crystal_ball: Prever"):
+                    with st.spinner("Processando..."):
+                        time.sleep(3)
 
-                    st.success("Processamento concluído!")
+                        st.subheader(":blue[Previsão]", divider="blue")
+
+                        st.markdown(
+                            f"**:orange[IMPORTANTE:] a previsão é feita com a data base em :blue[{DATA_INICIAL.strftime('%d/%m/%Y')}] (último preço do barril de petróleo coletado).**"
+                        )
+
+                        date_difference = min - end_date
+                        days_between = np.abs(date_difference.days)
+
+                        df_futuro = self.modelo.make_future_dataframe(
+                            periods=days_between, freq="D"
+                        )
+                        self.df_previsao = self.modelo.predict(df_futuro)
+
+                        # pega x previsões, filtrando pela data para mostrar ao usuário os próximos valores previstos
+                        df_previsoes_iniciais = self.df_previsao.query(
+                            "ds >= @min and ds <= @end_date"
+                        )
+
+                        with st.container():
+                            clone = df_previsoes_iniciais.copy()
+                            clone['ds'] = clone['ds'].apply(lambda x: pd.to_datetime(x).strftime('%d/%m/%Y'))
+                            clone.rename(columns={'ds': 'Data', 'yhat': 'Preço'}, inplace=True)
+
+
+                            _, col, _ = st.columns([3, 4, 3])
+
+                            with col:
+                                st.dataframe(
+                                    clone[['Data', 'Preço']],
+                                    use_container_width=True,
+                                    hide_index=True,
+                                )
+
+                        with st.container():
+                            self.plot_grafico_previsao(total_dias_previsao=days_between)
+
+                        st.success("Processamento concluído!")

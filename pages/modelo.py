@@ -13,11 +13,13 @@ output_layout()
 with st.container():
     st.header(f":orange[{TITULO_MODELO}]")
 
-    tab0, tab1 = st.tabs(tabs=['Prophet', 'LSTM'])
+    st.markdown(
+        """
+        Prever o preço do barril de petróleo é um desafio crítico para muitos setores, e tanto o :blue[Prophet] quanto a :blue[LSTM] são ferramentas valiosas nessa tarefa. O :blue[Prophet], criado pelo :blue[Facebook], é conhecido por sua acessibilidade e habilidade em lidar com padrões sazonais complexos, enquanto a :blue[LSTM], uma forma de rede neural recorrente, se destaca em capturar relações de longo prazo nos dados, algo essencial em mercados voláteis como o do petróleo. Ambos os modelos oferecem abordagens poderosas e complementares para entender e antecipar as flutuações no mercado de energia, fornecendo insights valiosos para tomadas de decisão.
+    """
+    )
+
+    tab0, tab1 = st.tabs(tabs=["Prophet", "LSTM"])
 
     ModeloProphetTab(tab0)
     ModeloLSTMTab(tab1)
-
-    # TODO: no modelo, permitir a escolha do horizonte de previsão
-    # TODO: mostrar o grafico de treino + previsao do horizonte
-    # TODO: mostrar o quanto a previsao vai se perdendo conforme o tempo passa

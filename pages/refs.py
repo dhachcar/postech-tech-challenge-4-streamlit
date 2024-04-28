@@ -30,4 +30,6 @@ with st.container():
         16. https://www.eia.gov/opendata/browser/petroleum/pri/spt
         17. https://facebook.github.io/prophet/docs/quick_start.html
         18. https://plotly.com/python
+        19. https://facebook.github.io/prophet/docs/quick_start.html
+        20. https://medium.com/data-hackers/prevendo-n%C3%BAmeros-entendendo-m%C3%A9tricas-de-regress%C3%A3o-35545e011e70
     ''')
