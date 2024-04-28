@@ -75,7 +75,12 @@ class ModeloProphetTab(TabInterface):
     def plot_grafico_previsao(self, total_dias_previsao):
         # gráfico do plotly
         fig = plot_plotly(
-            self.modelo, self.df_previsao, trend=True, figsize=(1200, 900), xlabel='Data', ylabel='Preço do barril de petróleo (US$)'
+            self.modelo,
+            self.df_previsao,
+            trend=True,
+            figsize=(1200, 900),
+            xlabel="Data",
+            ylabel="Preço do barril de petróleo (US$)",
         )
 
         # objetos de linha
@@ -205,7 +210,9 @@ class ModeloProphetTab(TabInterface):
 
                 with col0:
                     clone = self.df_performance.copy()
-                    clone['data_no_futuro'] = clone['data_no_futuro'].apply(lambda x: pd.to_datetime(x).strftime('%d/%m/%Y'))
+                    clone["data_no_futuro"] = clone["data_no_futuro"].apply(
+                        lambda x: pd.to_datetime(x).strftime("%d/%m/%Y")
+                    )
 
                     st.dataframe(clone, hide_index=True, height=720)
 
@@ -250,12 +257,13 @@ class ModeloProphetTab(TabInterface):
                     max_date = DATA_INICIAL + timedelta(days=90)
                     end_date = st.date_input(
                         "Data máxima de previsão",
+                        key="dt_input_prophet",
                         min_value=min,
                         max_value=max_date,
                         value=max_date,
                     )
 
-                if st.button(":crystal_ball: Prever"):
+                if st.button(":crystal_ball: Prever", key="btn_predict_prophet"):
                     with st.spinner("Processando..."):
                         time.sleep(3)
 
@@ -280,15 +288,18 @@ class ModeloProphetTab(TabInterface):
 
                         with st.container():
                             clone = df_previsoes_iniciais.copy()
-                            clone['ds'] = clone['ds'].apply(lambda x: pd.to_datetime(x).strftime('%d/%m/%Y'))
-                            clone.rename(columns={'ds': 'Data', 'yhat': 'Preço'}, inplace=True)
-
+                            clone["ds"] = clone["ds"].apply(
+                                lambda x: pd.to_datetime(x).strftime("%d/%m/%Y")
+                            )
+                            clone.rename(
+                                columns={"ds": "Data", "yhat": "Preço"}, inplace=True
+                            )
 
                             _, col, _ = st.columns([3, 4, 3])
 
                             with col:
                                 st.dataframe(
-                                    clone[['Data', 'Preço']],
+                                    clone[["Data", "Preço"]],
                                     use_container_width=True,
                                     hide_index=True,
                                 )
