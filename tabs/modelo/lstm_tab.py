@@ -2,6 +2,7 @@ from datetime import timedelta
 import time
 import numpy as np
 import pandas as pd
+import plotly.graph_objs as go
 import streamlit as st
 from tabs.tab import TabInterface
 import joblib
@@ -22,38 +23,14 @@ class ModeloLSTMTab(TabInterface):
 
         self.render()
 
-    """
-    def lstm_predict(num_prediction, series, modelo):
-        look_back = 5
-        prediction_list = series[-look_back:]
-
-        for _ in range(num_prediction):
-            x = prediction_list[-look_back:]
-            x = x.reshape((1, look_back, 1))
-            out = modelo.predict(x)[0][0]
-            prediction_list = np.append(prediction_list, out)
-
-        prediction_list = prediction_list[look_back - 1:]
-
-        return prediction_list
-
-    def lstm_predict_dates(datas, num_prediction):
-        last_date = datas.values[-1]
-        prediction_dates = pd.date_range(last_date, periods=num_prediction + 1).tolist()
-
-        return prediction_dates
-    """
-
     def predict(self, min, end_date):
         date_difference = min - end_date
         days_between = np.abs(date_difference.days)
 
         # generate the input and output sequences
         # TODO: testar esse lookback, se ele muda, quebra o codigo
-        n_lookback = 60  # length of input sequences (lookback period)
+        n_lookback = 10  # length of input sequences (lookback period), o mesmo utilizado para treinamento TODO: colocar isso no texto
         n_forecast = days_between  # length of output sequences (forecast period)
-
-        st.write(self.df)
 
         y_scaled = self.scaler.transform(self.df["y"].values.reshape(-1, 1))
         prediction_list = y_scaled[-n_lookback:]
@@ -61,12 +38,10 @@ class ModeloLSTMTab(TabInterface):
         for _ in range(1, n_forecast):
             x = prediction_list[-n_lookback:]
             x = x.reshape(1, n_lookback, 1)
-            out = self.modelo.predict(x)[0][0]
+            out = self.modelo.predict(x).reshape(-1, 1)
             prediction_list = np.append(prediction_list, out)
 
         prediction_list = prediction_list[n_lookback - 1 :]
-
-        st.write(prediction_list)
 
         # df passado
         df_past = self.df.copy()
@@ -86,10 +61,29 @@ class ModeloLSTMTab(TabInterface):
             prediction_list.reshape(-1, 1)
         )
 
-        results = pd.concat([df_past, df_future], ignore_index=True).set_index("ds")
+        # concat_results = pd.concat([df_past, df_future], ignore_index=True).set_index("ds")
 
-        st.write("merged")
-        st.dataframe(results)
+        # plot
+        results_past = df_past
+        results_past = results_past.set_index("ds")
+
+        fig = go.Figure(layout=go.Layout(title="Forecast IBOVESPA"))
+        fig.add_trace(
+            go.Scatter(
+                x=results_past.index, y=results_past["valor_real"], name="Atual"
+            ),
+        )
+        fig.add_trace(
+            go.Scatter(
+                x=df_future["ds"],
+                y=df_future["previsao"],
+                name="Previsão",
+                mode="lines",
+                line=dict(color="red", width=2),
+            ),
+        )
+
+        st.plotly_chart(fig)
 
     def render(self):
         with self.tab:
