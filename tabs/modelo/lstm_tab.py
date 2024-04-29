@@ -18,6 +18,8 @@ class ModeloLSTMTab(TabInterface):
         self.modelo = load_model("assets/modelos/lstm/lstm")
         self.scaler = joblib.load("assets/modelos/lstm/lstm-scaler.pkl")
 
+        self.df = self.df.sort_values(by="ds", ascending=True)
+
         self.render()
 
     """
@@ -48,9 +50,13 @@ class ModeloLSTMTab(TabInterface):
 
         # generate the input and output sequences
         # TODO: testar esse lookback, se ele muda, quebra o codigo
-        n_lookback = 10  # length of input sequences (lookback period)
+        n_lookback = 60  # length of input sequences (lookback period)
         n_forecast = days_between  # length of output sequences (forecast period)
-        prediction_list = self.df["y"].values.reshape(-1)[-n_lookback:]
+
+        st.write(self.df)
+
+        y_scaled = self.scaler.transform(self.df["y"].values.reshape(-1, 1))
+        prediction_list = y_scaled[-n_lookback:]
 
         for _ in range(1, n_forecast):
             x = prediction_list[-n_lookback:]
@@ -66,9 +72,7 @@ class ModeloLSTMTab(TabInterface):
         df_past = self.df.copy()
         df_past.rename(columns={"y": "valor_real"}, inplace=True)
         df_past["ds"] = pd.to_datetime(df_past["ds"])
-        df_past["valor_real"] = self.scaler.inverse_transform(
-            df_past["valor_real"].values.reshape(-1, 1)
-        )
+        df_past["valor_real"] = df_past["valor_real"].values.reshape(-1, 1)
         df_past["previsao"] = np.nan
         df_past["previsao"].iloc[-1] = df_past["valor_real"].iloc[-1]
 
@@ -78,19 +82,11 @@ class ModeloLSTMTab(TabInterface):
             pd.to_datetime(self.df["ds"]).max() + timedelta(days=1), periods=n_forecast
         ).tolist()
         df_future["valor_real"] = np.nan
-        df_future["previsao"] = prediction_list.flatten()
-
-        st.write("passado")
-        st.write(df_past)
-
-        st.write("futuro")
-        st.write(df_future)
-
-        results = (
-            pd.concat([df_past, df_future], ignore_index=True)
-            .set_index("ds")
-            .sort_index(ascending=False)
+        df_future["previsao"] = self.scaler.inverse_transform(
+            prediction_list.reshape(-1, 1)
         )
+
+        results = pd.concat([df_past, df_future], ignore_index=True).set_index("ds")
 
         st.write("merged")
         st.dataframe(results)
