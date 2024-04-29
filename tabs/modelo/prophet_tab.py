@@ -222,7 +222,7 @@ class ModeloProphetTab(TabInterface):
 
             st.markdown(
                 f"""
-                Nesta seção, apresentamos os indicadores de erro do modelo :blue[Prophet] criado. Todas elas são geradas de forma automática pela biblioteca e dentre as consideradas, estão:
+                Nesta seção, apresentamos os indicadores de erro do modelo :blue[Prophet] criado. Todos eles são gerados de forma automática pela biblioteca e dentre os considerados, estão:
                 * :orange[MSE (Mean Squared Error)]: calculado como a média dos quadrados das diferenças entre os valores previstos pelo modelo e os valores reais observados nos dados de teste ou validação. Quanto menor o valor, mais preciso é o modelo em suas previsões.
                 * :orange[RMSE (Root Mean Squared Error)]: calculado como a raiz quadrada do MSE, o que significa que fornece uma medida do erro médio entre os valores previstos pelo modelo e os valores reais observados nos dados de teste ou validação, na mesma unidade que os dados originais. Assim como o MSE, quanto menor o valor do RMSE, melhor o desempenho do modelo em fazer previsões precisas.
                 * :orange[MAE (Mean Absolute Error)]: calculado como a média das diferenças absolutas entre os valores previstos pelo modelo e os valores reais observados nos dados de teste ou validação. Ao contrário do MSE e do RMSE, o MAE não leva em conta o quadrado das diferenças, o que o torna menos sensível a outliers e mais intuitivo em termos de interpretação, pois representa diretamente a magnitude média dos erros. Quanto menor o valor, melhor.

@@ -20,7 +20,7 @@ class ModeloLSTMTab(TabInterface):
 
         self.render()
 
-    '''
+    """
     def lstm_predict(num_prediction, series, modelo):
         look_back = 5
         prediction_list = series[-look_back:]
@@ -40,7 +40,7 @@ class ModeloLSTMTab(TabInterface):
         prediction_dates = pd.date_range(last_date, periods=num_prediction + 1).tolist()
 
         return prediction_dates
-    '''
+    """
 
     def predict(self, min, end_date):
         date_difference = min - end_date
@@ -50,56 +50,49 @@ class ModeloLSTMTab(TabInterface):
         # TODO: testar esse lookback, se ele muda, quebra o codigo
         n_lookback = 10  # length of input sequences (lookback period)
         n_forecast = days_between  # length of output sequences (forecast period)
+        prediction_list = self.df["y"].values.reshape(-1)[-n_lookback:]
 
-        y = self.df["y"]
-        y = y.values.reshape(-1, 1)
+        for _ in range(1, n_forecast):
+            x = prediction_list[-n_lookback:]
+            x = x.reshape(1, n_lookback, 1)
+            out = self.modelo.predict(x)[0][0]
+            prediction_list = np.append(prediction_list, out)
 
-        X = []
-        Y = []
+        prediction_list = prediction_list[n_lookback - 1 :]
 
-        for i in range(n_lookback, len(y) - n_forecast + 1):
-            X.append(y[i - n_lookback : i])
-            Y.append(y[i : i + n_forecast])
+        st.write(prediction_list)
 
-        X = np.array(X)
-        Y = np.array(Y)
-
-        # generate the forecasts
-        X_ = y[-n_lookback:]  # last available input sequence
-        X_ = X_.reshape(1, n_lookback, 1)
-
-        st.write(X_)
-
-
-
-        # TODO: atualizar os itens de lookback para ele olhar e adicionar no df
-
-        Y_append = []
-        for i in range(0, n_forecast):
-            Y_ = self.modelo.predict(X_).reshape(-1, 1)
-            Y_ = self.scaler.inverse_transform(Y_)
-            Y_append.append(Y_)
-
-
-
-        st.write(Y_append)
-
-        # organize the results in a data frame
+        # df passado
         df_past = self.df.copy()
-        df_past.rename(columns={"ds": "Date", "y": "Actual"}, inplace=True)
-        df_past["Date"] = pd.to_datetime(df_past["Date"])
-        df_past["Forecast"] = np.nan
-        df_past["Forecast"].iloc[-1] = df_past["Actual"].iloc[-1]
-
-        df_future = pd.DataFrame(columns=["Date", "Actual", "Forecast"])
-        df_future["Date"] = pd.date_range(
-            start=df_past["Date"].iloc[-1] + pd.Timedelta(days=1), periods=n_forecast
+        df_past.rename(columns={"y": "valor_real"}, inplace=True)
+        df_past["ds"] = pd.to_datetime(df_past["ds"])
+        df_past["valor_real"] = self.scaler.inverse_transform(
+            df_past["valor_real"].values.reshape(-1, 1)
         )
-        df_future["Forecast"] = Y_append
-        df_future["Actual"] = np.nan
+        df_past["previsao"] = np.nan
+        df_past["previsao"].iloc[-1] = df_past["valor_real"].iloc[-1]
 
-        results = pd.concat([df_past, df_future], ignore_index=True).set_index("Date")
+        # df futuro
+        df_future = pd.DataFrame(columns=["ds", "valor_real", "previsao"])
+        df_future["ds"] = pd.date_range(
+            pd.to_datetime(self.df["ds"]).max() + timedelta(days=1), periods=n_forecast
+        ).tolist()
+        df_future["valor_real"] = np.nan
+        df_future["previsao"] = prediction_list.flatten()
 
+        st.write("passado")
+        st.write(df_past)
+
+        st.write("futuro")
+        st.write(df_future)
+
+        results = (
+            pd.concat([df_past, df_future], ignore_index=True)
+            .set_index("ds")
+            .sort_index(ascending=False)
+        )
+
+        st.write("merged")
         st.dataframe(results)
 
     def render(self):
