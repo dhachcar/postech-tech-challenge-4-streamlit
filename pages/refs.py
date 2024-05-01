@@ -11,7 +11,8 @@ output_layout()
 with st.container():
     st.header(f":orange[{TITULO_REFERENCIAS}]")
 
-    st.markdown('''
+    st.markdown(
+        """
         1. https://pt.wikipedia.org/wiki/Guerra_do_Golfo
         2. https://pt.wikipedia.org/wiki/Ataques_de_11_de_setembro_de_2001
         3. https://pt.wikipedia.org/wiki/Guerra_do_Iraque
@@ -32,4 +33,11 @@ with st.container():
         18. https://plotly.com/python
         19. https://facebook.github.io/prophet/docs/quick_start.html
         20. https://medium.com/data-hackers/prevendo-n%C3%BAmeros-entendendo-m%C3%A9tricas-de-regress%C3%A3o-35545e011e70
-    ''')
+        21, https://www.alura.com.br/artigos/metricas-de-avaliacao-para-series-temporais
+        22. https://keras.io/about/
+        23. https://www.tensorflow.org/?hl=pt-br
+        24. https://www.tensorflow.org/guide/keras?hl=pt-br
+        25. https://guru.com.vc/glossario/brent/
+        26. https://www.ipea.gov.br/desafios/index.php?option=com_content&view=article&id=2083:catid=28&Itemid=23
+    """
+    )

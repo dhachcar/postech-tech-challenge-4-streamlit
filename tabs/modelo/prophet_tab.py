@@ -214,7 +214,7 @@ class ModeloProphetTab(TabInterface):
 
             st.markdown(
                 """
-                Este modelo foi criado com base nos dados históricos do preço do barril de petróleo Brent a partir de 01/01/2020, de forma a diminuir a janela de treino e consequentemente aumentar a precisão de previsão.
+                Este modelo foi criado utilizando o :blue[Prophet da Meta] e com base nos dados históricos do preço do barril de petróleo Brent a partir de :blue[01/01/2020], de forma a diminuir a janela de treino e consequentemente aumentar a precisão de previsão.
             """
             )
 
@@ -274,7 +274,7 @@ class ModeloProphetTab(TabInterface):
 
             st.markdown(
                 f"""
-                Nesta seção, é possível escolher uma data no futuro e o modelo irá prever o preço do barril de petróleo até a data escolhida. Como os indicadores de erro tendem a subir de forma exponencial, quanto maior o tempo no futuro, limitamos o horizonte máximo em 90 dias a partir da data base :blue[{DATA_INICIAL.strftime("%d/%m/%Y")}].
+                Nesta seção, é possível escolher uma data no futuro e o modelo irá prever o preço do barril de petróleo até a data escolhida. Devido aos indicadores de erro tenderem a aumentar de forma exponencial quanto maior o tempo no futuro, limitamos o horizonte máximo em 90 dias a partir da data base :blue[{DATA_INICIAL.strftime("%d/%m/%Y")}].
             """
             )
 

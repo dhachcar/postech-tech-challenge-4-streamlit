@@ -9,6 +9,7 @@ import joblib
 from keras.models import load_model
 
 from util.constantes import DATA_INICIAL
+from util.layout import format_number
 
 
 class ModeloLSTMTab(TabInterface):
@@ -18,8 +19,10 @@ class ModeloLSTMTab(TabInterface):
         self.df = pd.read_csv("assets/csv/timeseries-petroleo-brent.csv")
         self.modelo = load_model("assets/modelos/lstm/lstm")
         self.scaler = joblib.load("assets/modelos/lstm/lstm-scaler.pkl")
+        self.df_performance = pd.read_csv("assets/csv/lstm-performance.csv")
 
         self.df = self.df.sort_values(by="ds", ascending=True)
+        self.df_performance.set_index("indicador", inplace=True)
 
         self.render()
 
@@ -27,8 +30,6 @@ class ModeloLSTMTab(TabInterface):
         date_difference = min - end_date
         days_between = np.abs(date_difference.days)
 
-        # generate the input and output sequences
-        # TODO: testar esse lookback, se ele muda, quebra o codigo
         n_lookback = 10  # length of input sequences (lookback period), o mesmo utilizado para treinamento TODO: colocar isso no texto
         n_forecast = days_between  # length of output sequences (forecast period)
 
@@ -63,11 +64,24 @@ class ModeloLSTMTab(TabInterface):
 
         # concat_results = pd.concat([df_past, df_future], ignore_index=True).set_index("ds")
 
+        with st.container():
+            self.plot_grafico_previsao(df_past, df_future, n_forecast)
+
+    def plot_grafico_previsao(self, df_past, df_future, total_dias_previsao):
         # plot
-        results_past = df_past
+        results_past = df_past.query('ds >= "2020-01-01"')
         results_past = results_past.set_index("ds")
 
-        fig = go.Figure(layout=go.Layout(title="Forecast IBOVESPA"))
+        fig = go.Figure(
+            layout=go.Layout(
+                title=f"Distribuição do valor (US$) do barril de petróleo Brent entre 2020 e os dias atuais + previsão dos próximos {total_dias_previsao} dia(s)",
+                showlegend=True,
+                margin=dict(t=150),
+                legend=dict(
+                    orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1
+                ),
+            )
+        )
         fig.add_trace(
             go.Scatter(
                 x=results_past.index, y=results_past["valor_real"], name="Atual"
@@ -83,7 +97,7 @@ class ModeloLSTMTab(TabInterface):
             ),
         )
 
-        st.plotly_chart(fig)
+        st.plotly_chart(fig, use_container_width=True)
 
     def render(self):
         with self.tab:
@@ -91,13 +105,50 @@ class ModeloLSTMTab(TabInterface):
 
             st.markdown(
                 """
-                LOREM IPSUM
+                Este modelo foi criado com combase no :blue[Tensorflow & Keras] e também considerou os dados históricos do preço do barril de petróleo Brent a partir de :blue[01/01/2020]. Vale notar que o período de lookback treinado no LSTM foi de 10 dias, o que significa que para realizar suas previsoões, ele sempre irá utilizar os valores dos últimos 10 dias.
             """
             )
 
             st.subheader(":blue[Performance do modelo]", divider="blue")
 
+            mse = format_number(self.df_performance.loc["MSE"], "%0.8f")
+            rmse = format_number(self.df_performance.loc["RMSE"], "%0.8f")
+            mape = format_number(self.df_performance.loc["MAPE"], "%0.8f")
+
+            st.markdown(
+                f"""
+                Nesta seção, apresentamos alguns indicadores de erro calculados para o modelo LSTM. O MSE é de :blue[{mse}], indicando a média dos quadrados das diferenças entre os valores previstos e os valores reais, sugerindo um bom ajuste do modelo aos dados. O RMSE, derivado do MSE, é de cerca de :blue[{rmse}], representando a raiz quadrada do MSE, oferecendo uma medida do erro médio do modelo em relação aos valores reais. Já o MAPE possui o valor de :blue[{mape}], que é a média dos percentuais absolutos de erro em relação aos valores reais, fornecendo uma medida de precisão relativa em termos percentuais. Todos esses valores indicam uma boa performance do modelo de previsão.
+            """
+            )
+
+            with st.container():
+                _, col0, col1, col2, _ = st.columns([1, 1, 1, 1, 1])
+
+                with col0:
+                    st.metric(
+                        label="MSE",
+                        value=mse,
+                    )
+
+                with col1:
+                    st.metric(
+                        label="RMSE",
+                        value=rmse,
+                    )
+
+                with col2:
+                    st.metric(
+                        label="MAPE",
+                        value=mape,
+                    )
+
             st.subheader(":blue[Executando o modelo]", divider="blue")
+
+            st.markdown(
+                f"""
+                Nesta seção, é possível escolher uma data no futuro e o modelo irá prever o preço do barril de petróleo até a data escolhida. Devido aos indicadores de erro tenderem a aumentar de forma exponencial quanto maior o tempo no futuro, limitamos o horizonte máximo em 90 dias a partir da data base :blue[{DATA_INICIAL.strftime("%d/%m/%Y")}].
+            """
+            )
 
             with st.container():
                 col, _ = st.columns([2, 6])
@@ -118,6 +169,10 @@ class ModeloLSTMTab(TabInterface):
                         time.sleep(3)
 
                         st.subheader(":blue[Previsão]", divider="blue")
+
+                        st.markdown(
+                            f"**:orange[IMPORTANTE:] a previsão é feita com a data base em :blue[{DATA_INICIAL.strftime('%d/%m/%Y')}] (último preço do barril de petróleo coletado).**"
+                        )
 
                         self.predict(min, end_date)
 
