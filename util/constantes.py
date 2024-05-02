@@ -6,6 +6,5 @@ TITULO_INTRODUCAO = 'Introdução'
 TITULO_HISTORIA = 'História sobre o preço'
 TITULO_ANALISE_EXPLORATORIA = 'Análise exploratória'
 TITULO_MODELO = 'Modelos de previsão'
-TITULO_CONCLUSAO = 'Conclusão'
 TITULO_REFERENCIAS = 'Referências'
 DATA_INICIAL = date(2024, 4, 22)

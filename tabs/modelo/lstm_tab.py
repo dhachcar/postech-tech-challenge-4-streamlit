@@ -65,6 +65,22 @@ class ModeloLSTMTab(TabInterface):
         # concat_results = pd.concat([df_past, df_future], ignore_index=True).set_index("ds")
 
         with st.container():
+            clone = df_future.copy()
+            clone["ds"] = clone["ds"].apply(
+                lambda x: pd.to_datetime(x).strftime("%d/%m/%Y")
+            )
+            clone.rename(columns={"ds": "Data", "previsao": "Preço"}, inplace=True)
+
+            _, col, _ = st.columns([3, 4, 3])
+
+            with col:
+                st.dataframe(
+                    clone[["Data", "Preço"]],
+                    use_container_width=True,
+                    hide_index=True,
+                )
+
+        with st.container():
             self.plot_grafico_previsao(df_past, df_future, n_forecast)
 
     def plot_grafico_previsao(self, df_past, df_future, total_dias_previsao):
