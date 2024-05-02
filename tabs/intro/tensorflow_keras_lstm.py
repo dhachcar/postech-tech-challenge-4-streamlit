@@ -29,7 +29,7 @@ class IntroTensorflowKerasLSTM(TabInterface):
 
             st.markdown(
                 """
-                TensorFlow e Keras estão intimamente relacionados, com Keras sendo integrado ao TensorFlow como sua API de alto nível padrão a partir da versão 2.0. Isso significa que os usuários podem aproveitar a simplicidade e flexibilidade do Keras enquanto se beneficiam da escalabilidade e desempenho do TensorFlow como backend. Essa integração torna mais fácil para os desenvolvedores construir, treinar e implantar modelos de aprendizado profundo usando TensorFlow com a simplicidade e a conveniência do Keras.
+                O TensorFlow e o Keras estão relacionados de tal forma que, o Keras é integrado ao TensorFlow como sua API de alto nível padrão a partir da versão 2.0. Isso significa que os usuários da biblioteca podem aproveitar a simplicidade e flexibilidade do Keras enquanto se beneficiam da escalabilidade e desempenho do TensorFlow como backend. Essa integração torna mais fácil para os desenvolvedores construir, treinar e implantar modelos de aprendizado profundo usando TensorFlow com a simplicidade e a conveniência do Keras.
             """
             )
 
