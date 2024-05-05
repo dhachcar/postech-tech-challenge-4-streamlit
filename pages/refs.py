@@ -19,7 +19,7 @@ with st.container():
         4. EIA Petroleum API Dashboard. Disponível em: https://www.eia.gov/opendata/browser/petroleum/pri/spt. Acesso em: 02/04/2024.
         5. Entenda a queda do preço do petróleo e seus efeitos. Publicado em: 16/01/2015. Disponível em: https://g1.globo.com/economia/noticia/2015/01/entenda-queda-do-preco-do-petroleo-e-seus-efeitos.html. Acesso em: 18/04/2024.
         6. IPEA. Publicado em: 2022. Disponível em: https://www.ipea.gov.br/portal/. Acesso em: 02/04/2024.
-        7. JUNIOR, J. R. F. Redes Neurais Recorrentes — LSTM. Publicado em 11/06/2019. Disponível em: https://medium.com/@web2ajax/redes-neurais-recorrentes-lstm-b90b720dc3f6. Acesso em: 02/05/2024.
+        7. JUNIOR, J. R. F. Redes Neurais Recorrentes — LSTM. Publicado em: 11/06/2019. Disponível em: https://medium.com/@web2ajax/redes-neurais-recorrentes-lstm-b90b720dc3f6. Acesso em: 02/05/2024.
         8. JÚNIOR, C. O. Métricas para Regressão: Entendendo as métricas R², MAE, MAPE, MSE e RMSE. Publicado em: 12/12/2021. Disponível em: https://medium.com/data-hackers/prevendo-n%C3%BAmeros-entendendo-m%C3%A9tricas-de-regress%C3%A3o-35545e011e70. Acesso em: 29/04/2024.
         9. Keras About. Disponível em: https://keras.io/about/. Acesso em: 02/04/2024.
         10. Meta Prophet Quick Start. Disponível em: https://facebook.github.io/prophet/docs/quick_start.html. Acesso em: 23/04/2024.
