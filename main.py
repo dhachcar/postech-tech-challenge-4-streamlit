@@ -37,7 +37,7 @@ st.markdown(
     No primeiro momento, os dados históricos de preço do barril de petróleo Brent são consultados à partir de uma API da EIA (Energy Information Administration). Após a consulta, analisamos os dados para entender como os mesmos estão distribuidos.
     Com base na análise feita, são criados 2 modelos distintos que tem o intuito de prever o preço futuro do barril de petróleo.
     A respeito dos modelos criados:
-    1. O primeiro modelo utiliza a biblioteca Prophet da Meta
-    2. O segundo modelo utiliza o algoritmo de rede neural LSTM (Long short-term memory)
+    1. O primeiro modelo utiliza a biblioteca Prophet da Meta;
+    2. O segundo modelo utiliza o algoritmo de rede neural LSTM (Long Short-Term Memory);
 """
 )

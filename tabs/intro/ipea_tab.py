@@ -22,6 +22,8 @@ class IntroIPEATab(TabInterface):
                 unsafe_allow_html=True,
             )
 
+            st.divider()
+
             with st.container():
                 _, col0, _ = st.columns([4, 2, 4])
 
