@@ -121,7 +121,7 @@ class ModeloLSTMTab(TabInterface):
 
             st.markdown(
                 """
-                Este modelo foi criado com combase no :blue[Tensorflow & Keras] e também considerou os dados históricos do preço do barril de petróleo Brent a partir de :blue[01/01/2020]. Vale notar que o período de lookback treinado no LSTM foi de 10 dias, o que significa que para realizar suas previsoões, ele sempre irá utilizar os valores dos últimos 10 dias.
+                Este modelo foi criado com com base no :blue[Tensorflow & Keras] e também considerou os dados históricos do preço do barril de petróleo Brent a partir de :blue[01/01/2020]. Vale notar que o período de lookback treinado no LSTM foi de 10 dias, o que significa que para realizar suas previsoões, ele sempre irá utilizar os valores dos últimos 10 dias.
             """
             )
 
